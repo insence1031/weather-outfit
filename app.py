@@ -125,16 +125,19 @@ def ask_gemini(city_name, country, temp, feels_like,
 - 4~6문장으로 간결하게
 """.strip()
 
-    try:
-        r = requests.post(
-            url,
-            json={"contents": [{"parts": [{"text": prompt}]}]},
-            timeout=20,
-        )
-        r.raise_for_status()
-        return r.json()["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception:
-        return None
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+
+    # 실패 시 최대 2번 시도
+    for attempt in range(2):
+        try:
+            r = requests.post(url, json=payload, timeout=30)
+            r.raise_for_status()
+            return r.json()["candidates"][0]["content"]["parts"][0]["text"]
+        except Exception:
+            if attempt == 1:
+                return None  # 2번 모두 실패 시 포기
+            import time
+            time.sleep(2)  # 2초 대기 후 재시도
 
 
 # ──────────────────────────────────────────────────────────────
