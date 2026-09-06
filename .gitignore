@@ -1,0 +1,18 @@
+# API 키가 담긴 파일 - GitHub에 절대 올라가면 안 됨
+.streamlit/secrets.toml
+config.py
+
+# 파이썬 임시 파일
+__pycache__/
+*.pyc
+
+# 테스트/임시 파일
+test_*.py
+result*.txt
+install_log.txt
+
+# 개인 메모 (requirements.txt는 제외)
+이것만 알면 나도 kiro 마스터.txt
+이것만알면나도소붕이.txt
+result*.txt
+install_log.txt
